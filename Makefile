@@ -13,10 +13,7 @@ WEB_USER = www-data:www-data
 .PHONY: init-project
 
 install-wordpress: init-project $(PUBLIC_HTML)/wp-load.php
-	@echo "Wordpress installed"
-
-
-
+	@echo "Wordpress Installed"
 
 
 $(PUBLIC_HTML)/wp-load.php: $(UNARCHIVE_DIR)/wordpress
@@ -34,7 +31,6 @@ $(SOFTWARE_DIR)/wordpress.tar.gz:
 
 
 init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/
-	@echo "Initialising Project"
 
 $(PUBLIC_HTML)/:
 	@mkdir -p $(PUBLIC_HTML)
