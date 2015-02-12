@@ -52,13 +52,16 @@ $(SITES_ENABLED)/$(DOMAIN): $(SITES_AVAILABLE)/$(DOMAIN)
 $(SITES_AVAILABLE)/$(DOMAIN): $(CONFIG_DIR)/$(DOMAIN).conf
 	@sudo ln -s $(CONFIG_DIR)/$(DOMAIN).conf $(SITES_AVAILABLE)/$(DOMAIN)
 
-$(CONFIG_DIR)/$(DOMAIN).conf:
+$(CONFIG_DIR)/$(DOMAIN).conf: $(CONFIG_DIR)/
 	@cat $(TEMPLATE_DIR)/nginx.conf.template |      \
 	sed -e "s|%%DOMAIN%%|$(DOMAIN)|"                \
 	    -e "s|%%DOCUMENT_ROOT%%|$(PUBLIC_HTML)|"    \
 	    -e "s|%%LOG_DIR%%|$(LOG_DIR)|"              > $(CONFIG_DIR)/$(DOMAIN).conf
 
-init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/ $(LOG_DIR)/
+init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/ $(LOG_DIR)/ $(CONFIG_DIR)/
+
+$(CONFIG_DIR)/:
+	@mkdir -p $(CONFIG_DIR)
 
 $(LOG_DIR)/:
 	@mkdir -p $(LOG_DIR)
