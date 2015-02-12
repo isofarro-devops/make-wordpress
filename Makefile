@@ -5,6 +5,7 @@ UNARCHIVE_DIR = $(BASEDIR)/tmp
 SOFTWARE_DIR = $(BASEDIR)/var/software
 PUBLIC_HTML = $(BASEDIR)/var/www
 LOG_DIR = $(BASEDIR)/var/log
+TEMPLATE_DIR = $(BASEDIR)/etc/opt
 
 SITES_AVAILABLE = /etc/nginx/sites-available
 SITES_ENABLED = /etc/nginx/sites-enabled
@@ -19,9 +20,14 @@ DOMAIN = devbox-php5.dev
 .PHONY: install-wordpress create-wpdb
 .PHONY: init-project init-config
 
-install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-load.php
+install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-config.php
 	@echo "Wordpress Installed"
 
+$(PUBLIC_HTML)/wp-config.php: $(PUBLIC_HTML)/wp-load.php
+	@cat $(TEMPLATE_DIR)/wp-config.php.template |  \
+	sed -e "s/%%MYSQL_USER%%/$(MYSQL_USER)/"      \
+	    -e "s/%%MYSQL_PASS%%/$(MYSQL_PASS)/"      \
+	    -e "s/%%MYSQL_DBNAME%%/$(MYSQL_DBNAME)/"  > $(PUBLIC_HTML)/wp-config.php
 
 $(PUBLIC_HTML)/wp-load.php: $(UNARCHIVE_DIR)/wordpress
 	@echo "Installing Wordpress"
