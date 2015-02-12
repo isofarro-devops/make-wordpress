@@ -1,7 +1,7 @@
 make-wordpress
 ==============
 
-Building out-of-the-box working instances of WordPress from a Makefile. This builds on top of the Ubuntu 14.04 devbox at https://github.com/isofarro/devbox-php5 (`ubuntu-14.04` branch)
+Building out-of-the-box working instances of WordPress from a Makefile. The intended server environment is Ubuntu 14.04 running NginX and PHP-FPM (PHP 5.5). You can find a suitable vagrant setup in the `ubuntu-14.04` branch of https://github.com/isofarro/devbox-php5
 
 Platform requirements:
 
