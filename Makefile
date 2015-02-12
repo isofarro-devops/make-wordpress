@@ -2,6 +2,7 @@ BASEDIR = $(CURDIR)
 SOFTWARE_DIR = $(BASEDIR)/var/software
 UNARCHIVE_DIR = $(BASEDIR)/tmp
 PUBLIC_HTML = $(BASEDIR)/var/www
+LOG_DIR = $(BASEDIR)/var/log
 
 MYSQL_USER = webdev
 MYSQL_PASS = webdev
@@ -30,7 +31,10 @@ $(SOFTWARE_DIR)/wordpress.tar.gz:
 	@wget -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
 
 
-init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/
+init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/ $(LOG_DIR)/
+
+$(LOG_DIR)/:
+	@mkdir -p $(LOG_DIR)
 
 $(PUBLIC_HTML)/:
 	@mkdir -p $(PUBLIC_HTML)
