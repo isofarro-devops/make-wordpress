@@ -49,9 +49,14 @@ $(SITES_ENABLED)/$(DOMAIN): $(SITES_AVAILABLE)/$(DOMAIN)
 	@sudo ln -s $(SITES_AVAILABLE)/$(DOMAIN) $(SITES_ENABLED)/$(DOMAIN)
 	@sudo service nginx restart
 
-$(SITES_AVAILABLE)/$(DOMAIN):
-	@sudo ln -s $(CONFIG_DIR)/nginx.conf $(SITES_AVAILABLE)/$(DOMAIN)
+$(SITES_AVAILABLE)/$(DOMAIN): $(CONFIG_DIR)/$(DOMAIN).conf
+	@sudo ln -s $(CONFIG_DIR)/$(DOMAIN).conf $(SITES_AVAILABLE)/$(DOMAIN)
 
+$(CONFIG_DIR)/$(DOMAIN).conf:
+	@cat $(TEMPLATE_DIR)/nginx.conf.template |      \
+	sed -e "s|%%DOMAIN%%|$(DOMAIN)|"                \
+	    -e "s|%%DOCUMENT_ROOT%%|$(PUBLIC_HTML)|"    \
+	    -e "s|%%LOG_DIR%%|$(LOG_DIR)|"              > $(CONFIG_DIR)/$(DOMAIN).conf
 
 init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/ $(LOG_DIR)/
 
