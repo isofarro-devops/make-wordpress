@@ -1,6 +1,8 @@
 BASEDIR = $(CURDIR)
-SOFTWARE_DIR = $(BASEDIR)/var/software
+
+CONFIG_DIR = $(BASEDIR)/etc/config
 UNARCHIVE_DIR = $(BASEDIR)/tmp
+SOFTWARE_DIR = $(BASEDIR)/var/software
 PUBLIC_HTML = $(BASEDIR)/var/www
 LOG_DIR = $(BASEDIR)/var/log
 
