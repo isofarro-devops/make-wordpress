@@ -6,14 +6,18 @@ SOFTWARE_DIR = $(BASEDIR)/var/software
 PUBLIC_HTML = $(BASEDIR)/var/www
 LOG_DIR = $(BASEDIR)/var/log
 
+SITES_AVAILABLE = /etc/nginx/sites-available
+SITES_ENABLED = /etc/nginx/sites-enabled
+
 MYSQL_USER = webdev
 MYSQL_PASS = webdev
 MYSQL_DBNAME = wp_simple
 
 WEB_USER = www-data:www-data
+DOMAIN = devbox-php5.dev
 
 .PHONY: install-wordpress create-wpdb
-.PHONY: init-project
+.PHONY: init-project init-config
 
 install-wordpress: init-project $(PUBLIC_HTML)/wp-load.php
 	@echo "Wordpress Installed"
@@ -31,6 +35,16 @@ $(UNARCHIVE_DIR)/wordpress/: $(SOFTWARE_DIR)/wordpress.tar.gz
 $(SOFTWARE_DIR)/wordpress.tar.gz:
 	@echo "Downloading Wordpress"
 	@wget -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
+
+
+init-config: $(SITES_ENABLED)/$(DOMAIN)
+
+$(SITES_ENABLED)/$(DOMAIN): $(SITES_AVAILABLE)/$(DOMAIN)
+	@sudo ln -s $(SITES_AVAILABLE)/$(DOMAIN) $(SITES_ENABLED)/$(DOMAIN)
+	@sudo service nginx restart
+
+$(SITES_AVAILABLE)/$(DOMAIN):
+	@sudo ln -s $(CONFIG_DIR)/nginx.conf $(SITES_AVAILABLE)/$(DOMAIN)
 
 
 init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/ $(LOG_DIR)/
