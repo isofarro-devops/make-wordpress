@@ -3,5 +3,5 @@
 # Ignore created directories
 /tmp
 /var
-
+/etc/config/
 
