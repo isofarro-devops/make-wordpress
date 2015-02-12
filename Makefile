@@ -19,7 +19,7 @@ DOMAIN = devbox-php5.dev
 .PHONY: install-wordpress create-wpdb
 .PHONY: init-project init-config
 
-install-wordpress: init-project $(PUBLIC_HTML)/wp-load.php
+install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-load.php
 	@echo "Wordpress Installed"
 
 
