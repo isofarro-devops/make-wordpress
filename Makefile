@@ -23,10 +23,10 @@ install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-config.php
 	@echo "Wordpress Installed"
 
 $(PUBLIC_HTML)/wp-config.php: $(PUBLIC_HTML)/wp-load.php
-	@cat $(TEMPLATE_DIR)/wp-config.php.template |  \
-	sed -e "s/%%MYSQL_USER%%/$(MYSQL_USER)/"      \
-	    -e "s/%%MYSQL_PASS%%/$(MYSQL_PASS)/"      \
-	    -e "s/%%MYSQL_DBNAME%%/$(MYSQL_DBNAME)/"  > $(PUBLIC_HTML)/wp-config.php
+	@cat $(TEMPLATE_DIR)/wp-config.php.template |     \
+	     sed -e "s/%%MYSQL_USER%%/$(MYSQL_USER)/"      \
+	         -e "s/%%MYSQL_PASS%%/$(MYSQL_PASS)/"       \
+	         -e "s/%%MYSQL_DBNAME%%/$(MYSQL_DBNAME)/"    > $(PUBLIC_HTML)/wp-config.php
 
 $(PUBLIC_HTML)/wp-load.php: $(UNARCHIVE_DIR)/wordpress
 	@echo "Installing Wordpress"
@@ -52,10 +52,10 @@ $(SITES_AVAILABLE)/$(DOMAIN): $(CONFIG_DIR)/$(DOMAIN).conf
 	@sudo ln -s $(CONFIG_DIR)/$(DOMAIN).conf $(SITES_AVAILABLE)/$(DOMAIN)
 
 $(CONFIG_DIR)/$(DOMAIN).conf: $(CONFIG_DIR)/
-	@cat $(TEMPLATE_DIR)/nginx.conf.template |      \
-	sed -e "s|%%DOMAIN%%|$(DOMAIN)|"                \
-	    -e "s|%%DOCUMENT_ROOT%%|$(PUBLIC_HTML)|"    \
-	    -e "s|%%LOG_DIR%%|$(LOG_DIR)|"              > $(CONFIG_DIR)/$(DOMAIN).conf
+	@cat $(TEMPLATE_DIR)/nginx.conf.template |         \
+	     sed -e "s|%%DOMAIN%%|$(DOMAIN)|"               \
+	         -e "s|%%DOCUMENT_ROOT%%|$(PUBLIC_HTML)|"    \
+	         -e "s|%%LOG_DIR%%|$(LOG_DIR)|"               > $(CONFIG_DIR)/$(DOMAIN).conf
 
 init-project: $(UNARCHIVE_DIR)/ $(SOFTWARE_DIR)/ $(PUBLIC_HTML)/ $(LOG_DIR)/ $(CONFIG_DIR)/
 
