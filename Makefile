@@ -14,7 +14,6 @@ MYSQL_USER = webdev
 MYSQL_PASS = webdev
 MYSQL_DBNAME = wp_simple
 
-WEB_USER = www-data:www-data
 DOMAIN = devbox-php5.dev
 
 .PHONY: install-wordpress create-wpdb
