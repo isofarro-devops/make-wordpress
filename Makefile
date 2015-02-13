@@ -15,6 +15,7 @@ MYSQL_PASS = webdev
 MYSQL_DBNAME = wp_simple
 
 DOMAIN = devbox-php5.dev
+WEB_USER = www-data:www-data
 
 .PHONY: install-wordpress create-wpdb
 .PHONY: init-project init-config
@@ -27,6 +28,7 @@ $(PUBLIC_HTML)/wp-config.php: $(PUBLIC_HTML)/wp-load.php
 	     sed -e "s/%%MYSQL_USER%%/$(MYSQL_USER)/"      \
 	         -e "s/%%MYSQL_PASS%%/$(MYSQL_PASS)/"       \
 	         -e "s/%%MYSQL_DBNAME%%/$(MYSQL_DBNAME)/"    > $(PUBLIC_HTML)/wp-config.php
+	# sudo chown -R $(WEB_USER) $(PUBLIC_HTML)
 
 $(PUBLIC_HTML)/wp-load.php: $(UNARCHIVE_DIR)/wordpress
 	@echo "Installing Wordpress"
