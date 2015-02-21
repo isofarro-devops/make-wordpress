@@ -143,7 +143,6 @@ $(UNARCHIVE_DIR)/:
 clean: clean-config clean-wpdb
 	@rm -rf $(UNARCHIVE_DIR) $(PUBLIC_HTML) $(CONFIG_DIR)
 	@rm -rf $(LOG_DIR)
-	@rm -d $(BASEDIR)/var
 
 clean-config:
 	@sudo rm -rf $(SITES_ENABLED)/$(DOMAIN) $(SITES_AVAILABLE)/$(DOMAIN)
