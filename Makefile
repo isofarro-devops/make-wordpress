@@ -17,11 +17,18 @@ MYSQL_DBNAME = wp_simple
 DOMAIN = devbox-php5.dev
 WEB_USER = www-data:www-data
 
-.PHONY: install-wordpress
+WP_PLUGINS_DIR = $(PUBLIC_HTML)/wp-content/plugins
+
+YOAST_ZIP = wordpress-seo.1.7.3.1.zip
+YOAST_PLUGIN = wordpress-seo
+
+.PHONY: install-wordpress install-plugins
+.PHONY: install-yoast
 .PHONY: init-project init-config
 .PHONY: clean clean-config clean-wpdb
 
-install:
+install: install-wordpress install-plugins
+
 
 install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-config.php
 	@echo "Wordpress Installed"
@@ -45,6 +52,24 @@ $(UNARCHIVE_DIR)/wordpress/: $(SOFTWARE_DIR)/wordpress.tar.gz
 $(SOFTWARE_DIR)/wordpress.tar.gz:
 	@echo "Downloading Wordpress"
 	@wget -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
+
+
+install-plugins: install-wordpress install-yoast
+
+
+install-yoast: $(WP_PLUGINS_DIR)/$(YOAST_PLUGIN)
+
+$(WP_PLUGINS_DIR)/$(YOAST_PLUGIN): $(UNARCHIVE_DIR)/$(YOAST_PLUGIN)
+	@echo "Installing Wordpress SEO by Yoast"
+	@cp -r $(UNARCHIVE_DIR)/$(YOAST_PLUGIN) $(WP_PLUGINS_DIR)/
+
+$(UNARCHIVE_DIR)/$(YOAST_PLUGIN): $(SOFTWARE_DIR)/$(YOAST_ZIP)
+	@echo "Unarchiving Wordpress SEO by Yoast"
+	@unzip -q $(SOFTWARE_DIR)/$(YOAST_ZIP) -d $(UNARCHIVE_DIR)/
+
+$(SOFTWARE_DIR)/$(YOAST_ZIP):
+	@echo "Downloading Wordpress SEO by Yoast"
+	@wget -O $(SOFTWARE_DIR)/$(YOAST_ZIP) https://downloads.wordpress.org/plugin/$(YOAST_ZIP)
 
 
 init-config: $(SITES_ENABLED)/$(DOMAIN)
