@@ -17,8 +17,11 @@ MYSQL_DBNAME = wp_simple
 DOMAIN = devbox-php5.dev
 WEB_USER = www-data:www-data
 
-.PHONY: install-wordpress create-wpdb
+.PHONY: install-wordpress
 .PHONY: init-project init-config
+.PHONY: clean clean-config clean-wpdb
+
+install:
 
 install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-config.php
 	@echo "Wordpress Installed"
@@ -28,7 +31,7 @@ $(PUBLIC_HTML)/wp-config.php: $(PUBLIC_HTML)/wp-load.php
 	     sed -e "s/%%MYSQL_USER%%/$(MYSQL_USER)/"      \
 	         -e "s/%%MYSQL_PASS%%/$(MYSQL_PASS)/"       \
 	         -e "s/%%MYSQL_DBNAME%%/$(MYSQL_DBNAME)/"    > $(PUBLIC_HTML)/wp-config.php
-	# sudo chown -R $(WEB_USER) $(PUBLIC_HTML)
+	@# sudo chown -R $(WEB_USER) $(PUBLIC_HTML)
 
 $(PUBLIC_HTML)/wp-load.php: $(UNARCHIVE_DIR)/wordpress
 	@echo "Installing Wordpress"
@@ -75,3 +78,15 @@ $(SOFTWARE_DIR)/:
 
 $(UNARCHIVE_DIR)/:
 	@mkdir -p $(UNARCHIVE_DIR)
+
+clean: clean-config clean-wpdb
+	@rm -rf $(UNARCHIVE_DIR) $(PUBLIC_HTML) $(CONFIG_DIR) $(SOFTWARE_DIR)
+	@rm -rf $(LOG_DIR)
+	@rm -d $(BASEDIR)/var
+
+clean-config:
+	@sudo rm -rf $(SITES_ENABLED)/$(DOMAIN) $(SITES_AVAILABLE)/$(DOMAIN)
+	@sudo service nginx stop && rm -rf $(LOG_DIR)/* && sudo service nginx start
+
+clean-wpdb:
+	@mysql -u$(MYSQL_USER) -p$(MYSQL_PASS) -Bse "DROP DATABASE IF EXISTS $(MYSQL_DBNAME);"
