@@ -57,7 +57,7 @@ $(UNARCHIVE_DIR)/wordpress/: $(SOFTWARE_DIR)/wordpress.tar.gz
 
 $(SOFTWARE_DIR)/wordpress.tar.gz:
 	@echo "Downloading Wordpress"
-	@wget -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
+	@wget -nv -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
 
 
 install-plugins: install-wordpress install-yoast install-woocommerce install-stripe
@@ -75,7 +75,7 @@ $(UNARCHIVE_DIR)/$(YOAST_PLUGIN)/: $(SOFTWARE_DIR)/$(YOAST_ZIP)
 
 $(SOFTWARE_DIR)/$(YOAST_ZIP):
 	@echo "Downloading Wordpress SEO by Yoast"
-	@wget -O $(SOFTWARE_DIR)/$(YOAST_ZIP) https://downloads.wordpress.org/plugin/$(YOAST_ZIP)
+	@wget -nv -O $(SOFTWARE_DIR)/$(YOAST_ZIP) https://downloads.wordpress.org/plugin/$(YOAST_ZIP)
 
 
 install-woocommerce: $(WP_PLUGINS_DIR)/$(WOOCOMMERCE_PLUGIN)/
@@ -90,7 +90,7 @@ $(UNARCHIVE_DIR)/$(WOOCOMMERCE_PLUGIN)/: $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP)
 
 $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP):
 	@echo "Downloading WooCommerce"
-	@wget -O $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP) https://downloads.wordpress.org/plugin/$(WOOCOMMERCE_ZIP)
+	@wget -nv -O $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP) https://downloads.wordpress.org/plugin/$(WOOCOMMERCE_ZIP)
 
 
 install-stripe: install-woocommerce $(WP_PLUGINS_DIR)/$(STRIPE_PLUGIN)/
@@ -105,7 +105,7 @@ $(UNARCHIVE_DIR)/$(STRIPE_PLUGIN)/: $(SOFTWARE_DIR)/$(STRIPE_ZIP)
 
 $(SOFTWARE_DIR)/$(STRIPE_ZIP):
 	@echo "Downloading Stripe for WooCommerce"
-	@wget -O $(SOFTWARE_DIR)/$(STRIPE_ZIP) https://downloads.wordpress.org/plugin/$(STRIPE_ZIP)
+	@wget -nv -O $(SOFTWARE_DIR)/$(STRIPE_ZIP) https://downloads.wordpress.org/plugin/$(STRIPE_ZIP)
 
 
 init-config: $(SITES_ENABLED)/$(DOMAIN)
