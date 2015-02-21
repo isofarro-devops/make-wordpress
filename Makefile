@@ -25,6 +25,9 @@ YOAST_PLUGIN = wordpress-seo
 WOOCOMMERCE_ZIP = woocommerce.2.3.5.zip
 WOOCOMMERCE_PLUGIN = woocommerce
 
+STRIPE_ZIP = stripe-for-woocommerce.zip
+STRIPE_PLUGIN = stripe-for-woocommerce
+
 .PHONY: install-wordpress install-plugins
 .PHONY: install-yoast install-woocommerce
 .PHONY: init-project init-config
@@ -57,7 +60,7 @@ $(SOFTWARE_DIR)/wordpress.tar.gz:
 	@wget -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
 
 
-install-plugins: install-wordpress install-yoast install-woocommerce
+install-plugins: install-wordpress install-yoast install-woocommerce install-stripe
 
 
 install-yoast: $(WP_PLUGINS_DIR)/$(YOAST_PLUGIN)/
@@ -88,6 +91,21 @@ $(UNARCHIVE_DIR)/$(WOOCOMMERCE_PLUGIN)/: $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP)
 $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP):
 	@echo "Downloading WooCommerce"
 	@wget -O $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP) https://downloads.wordpress.org/plugin/$(WOOCOMMERCE_ZIP)
+
+
+install-stripe: install-woocommerce $(WP_PLUGINS_DIR)/$(STRIPE_PLUGIN)/
+
+$(WP_PLUGINS_DIR)/$(STRIPE_PLUGIN)/: $(UNARCHIVE_DIR)/$(STRIPE_PLUGIN)/
+	@cp -r $(UNARCHIVE_DIR)/$(STRIPE_PLUGIN) $(WP_PLUGINS_DIR)
+	@echo "Stripe for WooCommerce installed"
+
+$(UNARCHIVE_DIR)/$(STRIPE_PLUGIN)/: $(SOFTWARE_DIR)/$(STRIPE_ZIP)
+	@echo "Unarchiving Stripe for WooCommerce"
+	@unzip -q $(SOFTWARE_DIR)/$(STRIPE_ZIP) -d $(UNARCHIVE_DIR)
+
+$(SOFTWARE_DIR)/$(STRIPE_ZIP):
+	@echo "Downloading Stripe for WooCommerce"
+	@wget -O $(SOFTWARE_DIR)/$(STRIPE_ZIP) https://downloads.wordpress.org/plugin/$(STRIPE_ZIP)
 
 
 init-config: $(SITES_ENABLED)/$(DOMAIN)
