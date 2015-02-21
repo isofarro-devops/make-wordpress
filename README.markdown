@@ -9,6 +9,10 @@ Platform requirements:
 * PHP 5.5.9 (default package), and `php5-fpm`
 * NginX 1.4.6 (default package)
 
+Plugins installed:
+
+* Wordpress SEO by Yoast
+
 Steps
 -----
 
