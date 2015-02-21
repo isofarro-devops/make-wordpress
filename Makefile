@@ -118,6 +118,7 @@ $(SITES_AVAILABLE)/$(DOMAIN): $(CONFIG_DIR)/$(DOMAIN).conf
 	@sudo ln -s $(CONFIG_DIR)/$(DOMAIN).conf $(SITES_AVAILABLE)/$(DOMAIN)
 
 $(CONFIG_DIR)/$(DOMAIN).conf: $(CONFIG_DIR)/
+	@echo "Setting up NginX config"
 	@cat $(TEMPLATE_DIR)/nginx.conf.template |         \
 	     sed -e "s|%%DOMAIN%%|$(DOMAIN)|"               \
 	         -e "s|%%DOCUMENT_ROOT%%|$(PUBLIC_HTML)|"    \
@@ -141,12 +142,15 @@ $(UNARCHIVE_DIR)/:
 	@mkdir -p $(UNARCHIVE_DIR)
 
 clean: clean-config clean-wpdb
+	@echo "Clearing down created directories"
 	@rm -rf $(UNARCHIVE_DIR) $(PUBLIC_HTML) $(CONFIG_DIR)
 	@rm -rf $(LOG_DIR)
 
 clean-config:
+	@echo "Removing NginX config"
 	@sudo rm -rf $(SITES_ENABLED)/$(DOMAIN) $(SITES_AVAILABLE)/$(DOMAIN)
 	@sudo service nginx stop && rm -rf $(LOG_DIR)/* && sudo service nginx start
 
 clean-wpdb:
+	@echo "Dropping database $(MYSQL_DBNAME)"
 	@mysql -u$(MYSQL_USER) -p$(MYSQL_PASS) -Bse "DROP DATABASE IF EXISTS $(MYSQL_DBNAME);"
