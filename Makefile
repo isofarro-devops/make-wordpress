@@ -31,7 +31,6 @@ install: install-wordpress install-plugins
 
 
 install-wordpress: init-project init-config $(PUBLIC_HTML)/wp-config.php
-	@echo "Wordpress Installed"
 
 $(PUBLIC_HTML)/wp-config.php: $(PUBLIC_HTML)/wp-load.php
 	@cat $(TEMPLATE_DIR)/wp-config.php.template |     \
@@ -39,6 +38,7 @@ $(PUBLIC_HTML)/wp-config.php: $(PUBLIC_HTML)/wp-load.php
 	         -e "s/%%MYSQL_PASS%%/$(MYSQL_PASS)/"       \
 	         -e "s/%%MYSQL_DBNAME%%/$(MYSQL_DBNAME)/"    > $(PUBLIC_HTML)/wp-config.php
 	@# sudo chown -R $(WEB_USER) $(PUBLIC_HTML)
+	@echo "Wordpress Installed"
 
 $(PUBLIC_HTML)/wp-load.php: $(UNARCHIVE_DIR)/wordpress
 	@echo "Installing Wordpress"
@@ -60,8 +60,8 @@ install-plugins: install-wordpress install-yoast
 install-yoast: $(WP_PLUGINS_DIR)/$(YOAST_PLUGIN)
 
 $(WP_PLUGINS_DIR)/$(YOAST_PLUGIN): $(UNARCHIVE_DIR)/$(YOAST_PLUGIN)
-	@echo "Installing Wordpress SEO by Yoast"
 	@cp -r $(UNARCHIVE_DIR)/$(YOAST_PLUGIN) $(WP_PLUGINS_DIR)/
+	@echo "Wordpress SEO by Yoast installed"
 
 $(UNARCHIVE_DIR)/$(YOAST_PLUGIN): $(SOFTWARE_DIR)/$(YOAST_ZIP)
 	@echo "Unarchiving Wordpress SEO by Yoast"
