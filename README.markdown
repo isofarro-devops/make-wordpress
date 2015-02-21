@@ -13,6 +13,7 @@ Plugins installed:
 
 * Wordpress SEO by Yoast (v1.7.3.1)
 * WooCommerce (v2.3.5)
+* Stripe for WooCommerce (v1.36)
 
 Steps
 -----
