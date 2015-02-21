@@ -13,6 +13,7 @@ Steps
 -----
 
 1. Checkout this repository
-2. `make install-wordpress`
+2. `make install`
+3. Do the Wordpress setup through the browser
 
 
