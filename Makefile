@@ -22,8 +22,11 @@ WP_PLUGINS_DIR = $(PUBLIC_HTML)/wp-content/plugins
 YOAST_ZIP = wordpress-seo.1.7.3.1.zip
 YOAST_PLUGIN = wordpress-seo
 
+WOOCOMMERCE_ZIP = woocommerce.2.3.5.zip
+WOOCOMMERCE_PLUGIN = woocommerce
+
 .PHONY: install-wordpress install-plugins
-.PHONY: install-yoast
+.PHONY: install-yoast install-woocommerce
 .PHONY: init-project init-config
 .PHONY: clean clean-config clean-wpdb
 
@@ -54,22 +57,37 @@ $(SOFTWARE_DIR)/wordpress.tar.gz:
 	@wget -O $(SOFTWARE_DIR)/wordpress.tar.gz https://wordpress.org/latest.tar.gz
 
 
-install-plugins: install-wordpress install-yoast
+install-plugins: install-wordpress install-yoast install-woocommerce
 
 
-install-yoast: $(WP_PLUGINS_DIR)/$(YOAST_PLUGIN)
+install-yoast: $(WP_PLUGINS_DIR)/$(YOAST_PLUGIN)/
 
-$(WP_PLUGINS_DIR)/$(YOAST_PLUGIN): $(UNARCHIVE_DIR)/$(YOAST_PLUGIN)
+$(WP_PLUGINS_DIR)/$(YOAST_PLUGIN)/: $(UNARCHIVE_DIR)/$(YOAST_PLUGIN)/
 	@cp -r $(UNARCHIVE_DIR)/$(YOAST_PLUGIN) $(WP_PLUGINS_DIR)/
 	@echo "Wordpress SEO by Yoast installed"
 
-$(UNARCHIVE_DIR)/$(YOAST_PLUGIN): $(SOFTWARE_DIR)/$(YOAST_ZIP)
+$(UNARCHIVE_DIR)/$(YOAST_PLUGIN)/: $(SOFTWARE_DIR)/$(YOAST_ZIP)
 	@echo "Unarchiving Wordpress SEO by Yoast"
 	@unzip -q $(SOFTWARE_DIR)/$(YOAST_ZIP) -d $(UNARCHIVE_DIR)/
 
 $(SOFTWARE_DIR)/$(YOAST_ZIP):
 	@echo "Downloading Wordpress SEO by Yoast"
 	@wget -O $(SOFTWARE_DIR)/$(YOAST_ZIP) https://downloads.wordpress.org/plugin/$(YOAST_ZIP)
+
+
+install-woocommerce: $(WP_PLUGINS_DIR)/$(WOOCOMMERCE_PLUGIN)/
+
+$(WP_PLUGINS_DIR)/$(WOOCOMMERCE_PLUGIN)/: $(UNARCHIVE_DIR)/$(WOOCOMMERCE_PLUGIN)/
+	@cp -r $(UNARCHIVE_DIR)/$(WOOCOMMERCE_PLUGIN) $(WP_PLUGINS_DIR)/
+	@echo "WooCommerce installed"
+
+$(UNARCHIVE_DIR)/$(WOOCOMMERCE_PLUGIN)/: $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP)
+	@echo "Unarchiving WooCommerce"
+	@unzip -q $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP) -d $(UNARCHIVE_DIR)/
+
+$(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP):
+	@echo "Downloading WooCommerce"
+	@wget -O $(SOFTWARE_DIR)/$(WOOCOMMERCE_ZIP) https://downloads.wordpress.org/plugin/$(WOOCOMMERCE_ZIP)
 
 
 init-config: $(SITES_ENABLED)/$(DOMAIN)
