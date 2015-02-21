@@ -29,7 +29,7 @@ STRIPE_ZIP = stripe-for-woocommerce.zip
 STRIPE_PLUGIN = stripe-for-woocommerce
 
 .PHONY: install-wordpress install-plugins
-.PHONY: install-yoast install-woocommerce
+.PHONY: install-yoast install-woocommerce install-stripe
 .PHONY: init-project init-config
 .PHONY: clean clean-config clean-wpdb
 
