@@ -141,7 +141,7 @@ $(UNARCHIVE_DIR)/:
 	@mkdir -p $(UNARCHIVE_DIR)
 
 clean: clean-config clean-wpdb
-	@rm -rf $(UNARCHIVE_DIR) $(PUBLIC_HTML) $(CONFIG_DIR) $(SOFTWARE_DIR)
+	@rm -rf $(UNARCHIVE_DIR) $(PUBLIC_HTML) $(CONFIG_DIR)
 	@rm -rf $(LOG_DIR)
 	@rm -d $(BASEDIR)/var
 
