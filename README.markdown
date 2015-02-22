@@ -23,3 +23,23 @@ Steps
 3. Do the Wordpress setup through the browser
 
 
+
+From scratch set up:
+--------------------
+
+Setting up a new dev box (PHP5.5 on Ubuntu 14.04):
+
+1. `wget https://github.com/isofarro/devbox-php5/archive/ubuntu-14.04.zip`
+2. `unzip ubuntu-14.04.zip`
+
+Creating your new project:
+
+1. `git clone -b woocommerce https://github.com/isofarro/make-wordpress.git YOUR_NEW_PROJECT`
+2. `cd YOUR_NEW_PROJECT/ && rf -rf .git/ && git init && cd ..`
+
+Start dev environment:
+
+1. `cd devbox-php5-ubuntu-14.04/`
+2. `vagrant up` -- this takes a few minutes to create and build a new VirtualBox environment
+3. `vagrant ssh`
+
