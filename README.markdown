@@ -42,4 +42,6 @@ Start dev environment:
 1. `cd devbox-php5-ubuntu-14.04/`
 2. `vagrant up` -- this takes a few minutes to create and build a new VirtualBox environment
 3. `vagrant ssh`
+4. `cd Projects/YOUR_NEW_PROJECT/`
+5. `make install`
 
